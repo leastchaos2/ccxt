@@ -1127,6 +1127,7 @@ module.exports = class kucoin extends Exchange {
         const networks = this.safeValue (this.options, 'networks', {});
         let network = this.safeStringUpper (params, 'network'); // this line allows the user to specify either ERC20 or ETH
         network = this.safeStringLower (networks, network, network); // handle ERC20>ETH alias
+        network = network.toLowerCase ();
         if (network !== undefined) {
             request['chain'] = network;
             params = this.omit (params, 'network');
