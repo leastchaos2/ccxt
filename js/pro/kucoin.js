@@ -676,7 +676,12 @@ module.exports = class kucoin extends kucoinRest {
         const amount = this.safeString (order, 'size');
         const rawType = this.safeString (order, 'type');
         const status = this.parseWsOrderStatus (rawType);
-        const timestamp = this.safeIntegerProduct (order, 'orderTime', 0.000001);
+        const orderTime = this.safeInteger(order, 'orderTime');
+        if (orderTime > 1e18) {
+            const timestamp = this.safeIntegerProduct (order, 'orderTime', 0.000001);
+        } else {
+            const timestamp = orderTime;
+        }
         const marketId = this.safeString (order, 'symbol');
         market = this.safeMarket (marketId, market);
         const symbol = market['symbol'];
